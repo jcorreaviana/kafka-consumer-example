@@ -1,0 +1,1 @@
+#An simple example of Kafka Consumer in .NET Core 3.1
