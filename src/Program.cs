@@ -22,9 +22,9 @@ namespace KafkaConsumerWorker
                 AutoOffsetReset = AutoOffsetReset.Earliest
             };
 
-            var consumer = new ConsumerBuilder<Ignore, string>(config).Build();
+            var consumer = new ConsumerBuilder<string, string>(config).Build();
 
-            consumer.Subscribe("topic-netcore");
+            consumer.Subscribe("kafka-topic");
 
             CancellationTokenSource cancellationToken = new CancellationTokenSource(); 
 
@@ -44,7 +44,7 @@ namespace KafkaConsumerWorker
                     {
                         var message = consumer.Consume(cancellationToken.Token);
 
-                        Console.WriteLine(message.Value);
+                        Console.WriteLine($"Message (Key/Value): {message.Key}:{message.Value}");
                     }
 
                     catch(ConsumeException ex)
@@ -57,6 +57,7 @@ namespace KafkaConsumerWorker
             {
                 consumer.Close();
             }
+ 
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
